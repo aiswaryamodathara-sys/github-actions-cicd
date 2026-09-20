@@ -1,0 +1,31 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test-docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Building application..."
+          test -f index.html
+
+      - name: Test
+        run: |
+          echo "Running tests..."
+          grep -q "CI/CD Pipeline Demo" index.html
+
+      - name: Build Docker Image
+        run: |
+          docker build -t github-actions-cicd .
+
